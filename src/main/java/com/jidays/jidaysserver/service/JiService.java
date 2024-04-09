@@ -5,14 +5,9 @@ import com.jidays.jidaysserver.entity.Subsource;
 import com.jidays.jidaysserver.entity.User;
 import com.jidays.jidaysserver.entity.UserLoginDto;
 import com.jidays.jidaysserver.entity.UserRegistrationDto;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import io.jsonwebtoken.Jwts;
 
-import javax.crypto.SecretKey;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,14 +49,7 @@ public class JiService {
         return true;
     }
 
-    public String generateToken(User user) {
-        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-        return Jwts.builder()
-                .setSubject(user.getEmail())
-                .setIssuedAt(new Date())
-                .signWith(key) // 你需要替换为你自己的密钥
-                .compact();
-    }
+
 
     public String login(UserLoginDto userLoginDto) {
         User getUser = jiDBMapper.findUserByEmail(userLoginDto.getEmail());

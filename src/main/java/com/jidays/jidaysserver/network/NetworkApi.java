@@ -5,9 +5,6 @@ import com.jidays.jidaysserver.entity.User;
 import com.jidays.jidaysserver.entity.UserLoginDto;
 import com.jidays.jidaysserver.entity.UserRegistrationDto;
 import com.jidays.jidaysserver.service.JiService;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,52 +23,58 @@ public class NetworkApi {
     }
 
     @GetMapping("/getSubsource")
-    public List<Subsource> getSubsource(@RequestParam(name = "page", defaultValue = "0") int page,
-                                        @RequestParam(name = "size", defaultValue = "10") int size) {
-        return jiService.getSubsource(page, size);
+    public ResponseEntity<ApiResponse> getSubsource(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                    @RequestParam(name = "size", defaultValue = "10") int size) {
+        List<Subsource> subsources = jiService.getSubsource(page, size);
+        return ResponseEntity.ok(ApiResponse.success("订阅源获取成功", subsources));
     }
 
     @PostMapping("/addSubsource")
-    public boolean addSubsource(@RequestParam(name = "tittle", defaultValue = "无标题的订阅源") String tittle,
-                                @RequestParam(name = "content", defaultValue = "空的简介") String content) {
-        return jiService.addSubsource(tittle, content);
+    public ResponseEntity<ApiResponse> addSubsource(@RequestParam(name = "tittle", defaultValue = "无标题的订阅源") String tittle,
+                                                    @RequestParam(name = "content", defaultValue = "空的简介") String content) {
+        boolean result = jiService.addSubsource(tittle, content);
+        if (result) {
+            return ResponseEntity.ok(ApiResponse.success("订阅源添加成功", null));
+        } else {
+            // 根据实际情况，这里的错误信息和错误对象可以进一步细化
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.error("订阅源添加失败", null));
+        }
     }
 
     @PostMapping("/user/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDto registrationDto) {
+    public ResponseEntity<ApiResponse> registerUser(@RequestBody UserRegistrationDto registrationDto) {
         boolean result = jiService.registerUser(registrationDto);
         if (result) {
-            return ResponseEntity.ok().body("用户注册成功");
+            return ResponseEntity.ok(ApiResponse.success("用户注册成功", null));
         } else {
-            return ResponseEntity.badRequest().body("注册失败，可能是用户名已存在");
+            return ResponseEntity.badRequest().body(ApiResponse.error("注册失败，可能是用户名已存在", null));
         }
     }
 
     @PostMapping("/user/login")
-    public ResponseEntity<?> login(@RequestBody UserLoginDto userLoginDto) {
+    public ResponseEntity<ApiResponse> login(@RequestBody UserLoginDto userLoginDto) {
         String token = jiService.login(userLoginDto);
         if (token != null) {
-            return ResponseEntity.ok().body(token);
+            return ResponseEntity.ok(ApiResponse.success("登陆成功", token));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("用户名或密码错误");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error("用户名或密码错误", null));
         }
     }
 
     @GetMapping("/user/getProfile")
-    public ResponseEntity<?> getProfile(@RequestHeader("Authorization") String authHeader, @RequestParam(name = "user", defaultValue = "") String email) {
+    public ResponseEntity<ApiResponse> getProfile(@RequestHeader("Authorization") String authHeader, @RequestParam(name = "user", defaultValue = "") String email) {
         User user = jiService.getProfile(authHeader, email);
         if (user != null) {
-            return ResponseEntity.ok(user); // 或者仅返回需要的用户信息字段
+            return ResponseEntity.ok(ApiResponse.success("获取用户信息成功", user));
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("无效的Token或找不到用户");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ApiResponse.error("无效的Token或找不到用户", null));
         }
     }
 
     @GetMapping("/getSubscribe")
-    public ResponseEntity<?> getSubscribe(@RequestHeader("Authorization") String authHeader,
+    public ResponseEntity<ApiResponse> getSubscribe(@RequestHeader("Authorization") String authHeader,
                                           @RequestParam(value = "user", defaultValue = "") String email,
-                                          @RequestParam(value = "subscribe", defaultValue = "-1") int sid)
-    {
+                                          @RequestParam(value = "subscribe", defaultValue = "-1") int sid) {
 
         return null;
     }

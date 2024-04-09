@@ -3,6 +3,7 @@ package com.jidays.jidaysserver.entity;
 /**
  * 订阅源实体化的数据结构
  */
+
 public class Subsource {
     int sid;
     String tittle;
