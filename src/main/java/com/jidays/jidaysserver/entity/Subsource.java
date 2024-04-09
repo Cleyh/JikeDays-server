@@ -3,18 +3,18 @@ package com.jidays.jidaysserver.entity;
 /**
  * 订阅源实体化的数据结构
  */
-public class Subscribe {
+public class Subsource {
     int sid;
     String tittle;
     String content;
 
-    public Subscribe(int sid, String tittle, String content) {
+    public Subsource(int sid, String tittle, String content) {
         this.sid = sid;
         this.tittle = tittle;
         this.content = content;
     }
 
-    public Subscribe() {
+    public Subsource() {
     }
 
     public int getSid() {
