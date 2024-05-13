@@ -2,9 +2,7 @@ package com.jidays.jidaysserver.dbprocess;
 
 import com.jidays.jidaysserver.entity.Subsource;
 import com.jidays.jidaysserver.entity.User;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -26,4 +24,16 @@ public interface JiDBMapper {
     User findUserByEmail(String email);
     @Insert("INSERT INTO user (name, email, password) VALUES (#{name}, #{email}, #{password})")
     boolean insertUser(User user);
+
+    @Select("")
+    Subsource getSubsourceFromID(int id);
+
+    @Select("")
+    List<Subsource> getUserSubscribeList(String email);
+
+    @Insert("")
+    boolean userSubsribe(String email, int subscribeID);
+
+    @Delete("")
+    void userUnsubsribe(String email, int subscribeID);
 }

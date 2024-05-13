@@ -1,5 +1,7 @@
 package com.jidays.jidaysserver.entity;
 
+import java.io.File;
+
 /**
  * 订阅源实体化的数据结构
  */

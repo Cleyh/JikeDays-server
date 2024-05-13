@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.JWTVerifier;
+
 import java.util.Date;
 
 public class TokenService {
@@ -21,14 +22,15 @@ public class TokenService {
                 .sign(Algorithm.HMAC256(SECRET_KEY));
     }
 
-    public static boolean isValidToken(String token) {
+    public static boolean isValidToken(String token, String userEmail) {
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(SECRET_KEY))
                     .withSubject("User Details")
+                    .withClaim("email", userEmail)
                     .build();
             verifier.verify(token);
             return true;
-        } catch (JWTVerificationException exception){
+        } catch (JWTVerificationException exception) {
             //Invalid signature/claims
             return false;
         }
