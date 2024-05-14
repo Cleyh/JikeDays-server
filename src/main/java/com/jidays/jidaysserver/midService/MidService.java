@@ -1,11 +1,10 @@
 package com.jidays.jidaysserver.midService;
 
 
+import java.util.List;
+
 public class MidService {
-    public static String hello(){
-        return null;
-    }
-    public static String world(){
-        return null;
+    public void updateActiveAllSubsource(){
+
     }
 }

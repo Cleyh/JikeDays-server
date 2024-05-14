@@ -1,10 +1,7 @@
 package com.jidays.jidaysserver.service;
 
 import com.jidays.jidaysserver.dbprocess.JiDBMapper;
-import com.jidays.jidaysserver.entity.Subsource;
-import com.jidays.jidaysserver.entity.User;
-import com.jidays.jidaysserver.entity.UserLoginDto;
-import com.jidays.jidaysserver.entity.UserRegistrationDto;
+import com.jidays.jidaysserver.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -106,5 +103,9 @@ public class JiService {
         if (!user_list.contains(subsource)) return false;
         jiDBMapper.userUnsubsribe(email, subscribeID);
         return false;
+    }
+
+    public List<Tweet> getLatestTweets(String email, int page, int size) {
+        return jiDBMapper.getLatestTweetsTest(page, size);
     }
 }

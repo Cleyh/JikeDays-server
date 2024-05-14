@@ -1,6 +1,7 @@
 package com.jidays.jidaysserver.dbprocess;
 
 import com.jidays.jidaysserver.entity.Subsource;
+import com.jidays.jidaysserver.entity.Tweet;
 import com.jidays.jidaysserver.entity.User;
 import org.apache.ibatis.annotations.*;
 
@@ -14,7 +15,7 @@ public interface JiDBMapper {
     @Select("select world from helloworld")
     public List<String> world();
 
-    @Select("SELECT sid, tittle, content FROM subsources LIMIT #{size} OFFSET #{offset}")
+    @Select("SELECT * FROM subsources LIMIT #{size} OFFSET #{offset}")
     List<Subsource> getSubsource(int offset, int size);
 
     @Insert("INSERT INTO `subsources` (`tittle`, `content`, `script`) VALUES (#{tittle}, #{content}, NULL)")
@@ -36,4 +37,7 @@ public interface JiDBMapper {
 
     @Delete("")
     void userUnsubsribe(String email, int subscribeID);
+
+    @Select("SELECT * FROM tweets LIMIT #{size} OFFSET #{offset}")
+    List<Tweet> getLatestTweetsTest(int offset, int size);
 }

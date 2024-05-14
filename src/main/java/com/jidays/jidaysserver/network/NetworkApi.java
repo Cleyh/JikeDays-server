@@ -142,4 +142,12 @@ public class NetworkApi {
 
         return ResponseEntity.ok(ApiResponse.success("取消订阅成功", null));
     }
+
+    @GetMapping("/getLatestTweets")
+    public ResponseEntity<ApiResponse> getLatestTweets(@RequestParam(name = "user") String email,
+                                                       @RequestParam(name = "page", defaultValue = "1") int page,
+                                                       @RequestParam(name = "size", defaultValue = "10") int size) {
+        List<Tweet> result = jiService.getLatestTweets(email, page, size);
+        return ResponseEntity.ok(ApiResponse.success("获取最新推文成功", result));
+   }
 }
