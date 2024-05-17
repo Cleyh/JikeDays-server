@@ -7,16 +7,18 @@ public class Tweet {
     int tid;
     int sid;
     String title;
+    String summary;
     String content;
     String type;
     String timeSlotA;
     String timeSlotB;
     String timeSlotC;
 
-    public Tweet(int tid, int sid, String title, String content, String type, String timeSlotA, String timeSlotB, String timeSlotC) {
+    public Tweet(int tid, int sid, String title, String summary, String content, String type, String timeSlotA, String timeSlotB, String timeSlotC) {
         this.tid = tid;
         this.sid = sid;
         this.title = title;
+        this.summary = summary;
         this.content = content;
         this.type = type;
         this.timeSlotA = timeSlotA;
@@ -86,5 +88,13 @@ public class Tweet {
 
     public void setTimeSlotC(String timeSlotC) {
         this.timeSlotC = timeSlotC;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 }

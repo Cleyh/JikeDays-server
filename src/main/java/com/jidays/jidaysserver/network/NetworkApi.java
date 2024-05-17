@@ -21,7 +21,14 @@ public class NetworkApi {
         return ResponseEntity.ok(ApiResponse.success("Hello!", result));
     }
 
-    // 获取所有订阅源列表
+    // 测试
+    @GetMapping("/Test")
+    public ResponseEntity<ApiResponse> getTest() {
+        jiService.getTest();
+        return ResponseEntity.ok(ApiResponse.success("Hello!", null));
+    }
+
+    // 获取所有订阅源列表页&表
     @GetMapping("/getSubsource")
     public ResponseEntity<ApiResponse> getSubsource(@RequestParam(name = "page", defaultValue = "0") int page,
                                                     @RequestParam(name = "size", defaultValue = "10") int size) {

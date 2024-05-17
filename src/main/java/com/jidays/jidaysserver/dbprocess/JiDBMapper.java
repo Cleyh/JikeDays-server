@@ -40,4 +40,16 @@ public interface JiDBMapper {
 
     @Select("SELECT * FROM tweets LIMIT #{size} OFFSET #{offset}")
     List<Tweet> getLatestTweetsTest(int offset, int size);
+
+    @Select("SELECT * FROM subsources")
+    List<Subsource> getAllSubsource();
+
+    @Select("SELECT * FROM subsources WHERE type = #{type}")
+    List<Subsource> getAllTypeSubsource(String type);
+
+    @Insert("INSERT INTO tweets " +
+            "(sid, title, summary, content, type, timeSlotA, timeSlotB, timeSlotC) VALUES " +
+            "(#{sid}, #{title}, #{summary}, #{processedData}, #{type}, #{timeSlotA}, #{timeSlotB}, #{timeSlotC})")
+    void addTweet(int sid, String title, String summary, String processedData, String type,
+                  String timeSlotA, String timeSlotB, String timeSlotC);
 }

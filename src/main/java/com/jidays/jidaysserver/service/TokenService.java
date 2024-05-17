@@ -4,9 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.JWTVerifier;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 
+@Service
 public class TokenService {
     private static final String SECRET_KEY = "yourSecretKey";
     private static final long EXPIRATION_TIME = 900_000; // 15 minutes in milliseconds
